@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}CASE列表{% endblock %}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li><a href="/rango/project?id={{api.module.project.id}}">{{ api.module.project.name }}</a></li>
+		<li><a href="/rango/apis?mid={{api.module.id}}">{{ api.module.name }}</a></li>
+  		<li class="active">{{ api.name }}(<a href="javascript:;" class="profile">{{api.created_user.username}}</a>于{{api.created_time|date:"Y年m月d日 H:i:s"}}登记此接口)</li>
+	</ol>
+
+	<div class="row">
+        {% if perms.script.add_case%}
+		<div ><a class="btn btn-default pull-right" href="/rango/cases/test?aid={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash"></span>Run Test</a><a class="btn btn-primary pull-right" href="/rango/case/create?aid={{api.id}}">+添加CASE</a></div>
+		{% endif %}
+        <table class="table table-striped table-hover table-condensed">
+			<thead>
+				<tr class="row">
+					<th class="col-sm-1">ID</th>
+					<th class="col-sm-4">应用级参数</th>
+					<th class="col-sm-3">期望结果</th>
+					<th class="col-sm-1">期望状态</th>
+					<th class="col-sm-3">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for case in cases%}
+                    {% if case.status %}
+                        <tr class="row inactive">
+                    {% else %}
+                        <tr class="row active">
+                    {% endif %}
+						<td class="col-sm-1"><a class="btn" href="/rango/case/report?id={{case.id}}" >{{ case.id }}</a></td>
+						<td class="col-sm-4">
+                        {% ifequal case.api.method 'POST' %}
+    				<pre><code class="json">{{ case.body }}</code></pre>
+            {% else %}
+                    {{ case.body }}
+            {% endifequal %}
+                        
+                        </td>
+						<td class="col-sm-3"><pre><code class="json">[{{ case.expected }}]</code></pre></td>
+						<td class="col-sm-1">{{ case.expected_status }}</td>
+                        <td class="col-sm-3">
+                        {% if case.status %}
+                        {% if perms.script.change_case%}
+                        <a class="btn" href="/rango/case/active?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="激活"><span class="glyphicon glyphicon-pushpin"></span></a>
+                        {% endif %}
+                        {% else %}
+                        {% if perms.script.change_case%}
+                            <a class="btn" href="/rango/case/edit?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn" href="/rango/case/inactive?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="禁用"><span class="glyphicon glyphicon-trash"></span></a>
+                        {% endif %}
+                            <a class="btn" href="/rango/case/test?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash"></span></a>
+                            <a class="btn" href="/rango/case/report?id={{case.id}}" data-toggle="tooltip" data-placement="right" title="查看报告"><span class="glyphicon glyphicon-list-alt"></span></a>
+                                              
+                        {% endif %}
+                        </td>  
+                    </tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

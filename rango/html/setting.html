@@ -1,0 +1,79 @@
+﻿{% extends "base.html" %}
+{% block title %}项目设置{% endblock %}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+        <li><a href="/rango/project?id={{project.id}}">{{project.name}}</a></li>
+  		<li class="active">项目设置</li>
+	</ol>
+	<div class="row">
+		<form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="/rango/project/setting_save?id={{project.id}}">
+			{% csrf_token %}
+            <div>
+            <h3>定时任务</h3>
+  			<div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">自动测试时间</label>
+   				 <div class="col-sm-10">
+      				<span>每天</span><input type="text" name="hour" class=" input-sm" value="{{setting.task.crontab.hour}}" placeholder="00"><span>:</span><input type="text" name="minute" class=" input-sm" value="{{setting.task.crontab.minute}}"  placeholder="00">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="enable" class="col-sm-2 control-label">启用/禁用</label>
+   				 <div class="col-sm-10">
+                 {% if setting.task.enabled%}
+      				<label><input type="radio" name="enable" value="False" >禁用</label>
+                    <label><input type="radio" name="enable" value="True" checked>启用</label>
+                 {% else %}
+                    <label><input type="radio" name="enable" value="False" checked>禁用</label>
+                    <label><input type="radio" name="enable" value="True" >启用</label>
+                 {% endif %}
+   				 </div>
+  			</div>
+            </div>
+            <div>
+            <h3>测试DB配置</h3>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">DB地址</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="address" class=" form-control" value="{{setting.db.address}}" placeholder="127.0.0.1">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">数据库名</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="dbname" class=" form-control" value="{{setting.db.dbname}}" placeholder="test">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">端口</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="port" class=" form-control" value="{{setting.db.port}}" placeholder="3306">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">DB/用户名</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="username" class=" form-control" value="{{setting.db.username}}"  placeholder="ROOT">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">DB/密码</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="password" class=" form-control" value="{{setting.db.password}}"  placeholder="ROOT">
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="testruntime" class="col-sm-2 control-label">DB/脚本</label>
+   				 <div class="col-sm-10">
+      				<input type="file" name="sql" class=" form-control" value="{{setting.db.sql}}"  placeholder="脚本">
+   				 </div>
+  			</div>
+            </div>
+            <div class="form-group">
+    				<div class="col-sm-offset-2 col-sm-10">
+      			<button type="submit" class="btn btn-primary">保存</button>
+            </div>
+            </div>
+</form>
+	</div>
+{% endblock %}

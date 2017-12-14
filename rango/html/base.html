@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}{% endblock %}        
+    </title>
+	<link rel="stylesheet" type="text/css" href="/static/vendor/bootstrap/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/solarized_dark.min.css">
+    
+	<script type="text/javascript" src="/static/vendor/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="/static/vendor/bootstrap.js"></script>
+    <script type="text/javascript" src="/static/vendor/esl.js"></script>
+    <script type="text/javascript" src="/static/vendor/jquery.pagination.js"></script>
+	<script type="text/javascript" src="/static/vendor/highlight.min.js"></script>
+    <script type="text/javascript" src="/static/vendor/bootstrap.autocomplete.js"></script>
+    <script type="text/javascript">
+    require.config({
+            packages: [
+                {
+                    name: 'echarts',
+                    location: '/static/vendor/echart/src',
+                    main: 'echarts'
+                },
+                {
+                    name: 'zrender',
+                    location: '/static/vendor/zrender/src',
+                    main: 'zrender'
+                }
+            ]
+        });   
+    </script>
+</head>
+
+<body>
+	<article>
+	<header>
+    <nav class="container navbar  navbar-fixed-top ng-scope" role="navigation" ng-controller="CommonController">
+			<div class="container navbar-header">
+			    <div class="navbar-brand" >
+			    	Auto Tester
+			    </div>
+			    		<div class="collapse navbar-collapse">
+				    <ul class="nav navbar-nav">
+				    	<li><a href="/rango/home">首页</a></li>
+
+				      <li><a href="/rango/projects">项目</a></li>
+				      <li><a href="/rango/reports">测试报告</a></li>
+				      <li><a href="/rango/about">关于</a></li>
+				    </ul>
+				    <ul class="navbar-nav profile-area navbar-right ng-hide">
+					    {% if request.user.is_authenticated %}
+		<div class="pull-right">
+			欢迎您：<a href=#>{{request.user}}</a>&nbsp;&nbsp;
+			<a class="btn danger small" href="/rango/logout?next={{request.get_full_path}}">注销</a>
+		</div>
+{% else %}
+          <form action="/rango/login" method='post' class="pull-right">
+			{% csrf_token %}
+            <input name='username' class="input-sm" type="text" placeholder="用户名">
+            <input name='password' class="input-sm" type="password" placeholder="密码">
+            <input name='next' class="input-sm" type="hidden" value="{{request.get_full_path}}">
+            <button class="btn btn-primary" type="submit">登录</button>
+          </form>
+{% endif %}
+					</ul>
+			</div>
+			</div>
+		</nav>
+	</header>
+	<section class="container">    
+	{% block content %}
+    {% endblock %}
+	</section>
+    {% block footer %}
+<footer>
+    {# 任何每个页面都可能修改的文本区域的页脚 #}
+        <p>@Copyright BugLife Inc. All Rights Reserved </p>
+    {% endblock %}
+</footer>
+	</article>
+    <script type="text/javascript" src="/static/app.js"></script>
+</body>
+</html>

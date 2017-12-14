@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}新建模块{% endblock %}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li><a href='/rango/project?id={{project.id}}'>{{project.name}}</a></li>
+  		<li class="active">添加模块</li>
+	</ol>
+
+	<div class="row">
+		<form class="form-horizontal" role="form" method="POST" action="/rango/module/save?pid={{ project.id }}">
+			{% csrf_token %}
+  			<div class="form-group">
+    				<label for="name" class="col-sm-2 control-label">模块名</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="name" class="form-control" id="name" placeholder="模块名">
+   				 </div>
+  			</div>
+    			<div class="form-group">
+    				<div class="col-sm-offset-2 col-sm-10">
+      			<button type="submit" class="btn btn-primary">保存</button>
+    			</div>
+  </div>
+</form>
+
+			</div>
+{% endblock %}

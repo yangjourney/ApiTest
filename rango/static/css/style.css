@@ -1,0 +1,102 @@
+/*
+ * Bug Life
+ *
+ * Copyright 2013-2015 the original author or authors.
+ *
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@CHARSET "UTF-8";
+
+a:hover {
+	text-decoration: none;
+	color: blue;
+}
+
+body {
+	margin: auto;
+	color: black;
+	font-size: 14px;
+	backgound: #e9e9e9;
+	font-kerning: initial;
+	font-style: normal;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+header {
+	height: 50px;
+	margin: auto;
+	font-size-adjust: none;
+	line-height: 1;
+	text-align: left;
+	background-color: #6D6580;
+	border-color: #463265;
+	top: 0;
+	border-width: 0 0 1px;
+	position: fixed;
+	right: 0;
+	left: 0;
+	z-index: 1030;
+	font-weight: bold;
+	color: wheat;
+}
+
+footer {
+	padding-top: 40px;
+	padding-bottom: 30px;
+	color: #E9DCDC;
+	text-align: center;
+	border-top: 1px solid #e5e5e5
+}
+
+section {
+	margin: 80px auto auto auto;
+	min-height: 450px;
+}
+
+.project {
+	height: 120px;
+	border: double 1px rgb(152, 165, 184);
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.project_inactive {
+	height: 120px;
+	border: double 1px rgb(152, 165, 184);
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.module {
+	height: 120px;
+	border: double 1px rgb(152, 165, 184);
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.success_font{
+	color: rgb(13, 252, 70);	
+}
+
+.failure_font {
+	color: red;
+}
+
+.container {
+	width:90%
+}
+textarea {
+	resize: none;
+}
+
+table {
+    width: 100%;
+    word-wrap: break-word;
+    word-break: break-word;
+}

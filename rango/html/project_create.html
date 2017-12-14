@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}新建项目{% endblock %}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li class="active">添加项目</li>
+	</ol>
+	<div class="row">
+		<form class="form-horizontal" role="form" method="POST" action="/rango/project/save">
+			{% csrf_token %}
+  			<div class="form-group">
+    				<label for="name" class="col-sm-2 control-label">项目名</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="name" class="form-control" id="name" placeholder="项目名">
+   				 </div>
+  			</div>
+			<div class="form-group">
+    				<label for="domain" class="col-sm-2 control-label">Domain</label>
+   				 <div class="col-sm-10">
+      				<input type="text" name="domain" class="form-control" id="domain" placeholder="域名/(ip:port/project)">
+   				 </div>
+  			</div>
+			<div class="form-group">
+    				<label for="description" class="col-sm-2 control-label">项目简介</label>
+   				 <div class="col-sm-10">
+      				<textarea name="description" class="form-control" rows="10" id="description" placeholder="项目简介"></textarea>
+   				 </div>
+  			</div>
+    			<div class="form-group">
+    				<div class="col-sm-offset-2 col-sm-10">
+      			<button type="submit" class="btn btn-primary">保存</button>
+    			</div>
+  </div>
+</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title%}API列表{% endblock%}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li><a href="/rango/project?id={{case.api.module.project.id}}">{{ case.api.module.project.name }}</a></li>
+        <li><a href="/rango/apis?mid={{case.api.module.id}}">{{ case.api.module.name }}</a></li>
+        <li><a href="/rango/cases?aid={{case.api.id}}">{{ case.api.name }}</a></li>
+  		<li class="active">{{case.id}}</li>
+        <li class="active">测试报告</li>
+	</ol>
+	<div class="row">
+        	
+        {% for report in reports%}
+                {%if report.status%}
+ 
+            <div class="panel panel-success">
+                        {% else %}
+            <div class="panel panel-danger">
+                        {% endif %}
+                        
+               
+            <div class="panel-heading">
+                <a href="/rango/case/edit?id={{report.case.id}}">Case{{report.case.id}}</a>
+                <div class="pull-right">
+                {%if report.status%}
+                            <span class="label label-success">
+                               <span class="glyphicon glyphicon-ok-sign">成功</span>
+                            </span>
+                        {% else %}
+                            <span class="label label-danger"><span class="glyphicon glyphicon-remove-sign">失败</span></span>
+                        {% endif %}
+                </div>
+            </div>
+            <div class="panel-body">
+
+        <div class="row">
+        <div class="panel-group col-md-7" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{report.id}}_response"  aria-expanded="true" aria-controls="collapseOne">
+                    返回结果
+                    </a>
+                    </h4>
+                    </div>
+                <div id="{{report.id}}_response" class="panel-collapse collapse collapsing " role="tabpanel">
+                    <div class="panel-body">
+                        <pre><code class="json">{{report.content}}</code></pre>
+                    </div>
+                    <div class="panel-footer">
+                        
+                    </div>
+                </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-toggle="collapse"  data-parent="#accordion" href="#{{report.id}}_detail"  aria-expanded="true" aria-controls="collapseOne">
+                    校验详细
+                    </a>
+                    </h4>
+                    </div>
+                <div id="{{report.id}}_detail" class="panel-collapse collapse collapsing " role="tabpanel">
+                    <div class="panel-body">
+                        <pre><code class="json">{{report.detail}}</code></pre>
+                    </div>
+                    <div class="panel-footer">
+                    </div>
+                </div>
+                </div>
+                    {%if report.status%}
+        {% else %}
+            <div class="panel panel-danger">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{report.id}}_error"  aria-expanded="true" aria-controls="collapseOne">
+                    验证错误
+                    </a>
+                    </h4>
+                    </div>
+                <div id="{{report.id}}_error" class="panel-collapse collapse collapsing " role="tabpanel">
+                    <div class="panel-body">
+                       <pre class="alert alert-danger"><code class="json">{{report.error}}</code></pre>
+                    </div>
+                    <div class="panel-footer">
+                        
+                    </div>
+                </div>
+            </div>
+           {% endif %}
+        </div>
+        
+        <div class="panel-group col-md-5" role="tablist" aria-multiselectable="true">
+
+            <div class="panel panel-info">
+                    <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#{{report.id}}_dbresult"  aria-expanded="true" aria-controls="collapseOne">
+                    DB结果
+                    </a>
+                    </h4>
+                    </div>
+                <div id="{{report.id}}_dbresult" class="panel-collapse collapse collapsing " role="tabpanel">
+                    <div class="panel-body">
+                        <pre><code class="json">{{report.dbresult}}</code></pre>
+                    </div>
+                    <div class="panel-footer">
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+        
+    </div>
+    <div class="panel-footer">
+        <span><a href="javascript:;" class="profile">{{report.created_user.username}}</a>于{{report.created_time|date:"Y年m月d日 H:i:s"}}完成该测试</span>
+    </div>
+    </div>
+       {% endfor %}
+	</div>
+{% endblock %}

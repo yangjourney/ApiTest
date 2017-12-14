@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}模块列表{% endblock %}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li class="active">{{project.name}}</li>
+	</ol>
+    
+                <div class="row">
+                    <div class="col-md-7">
+                        <div><p>{{project.name}}由<a class="profile" href="javascript:;">{{project.created_user.username}}</a>于{{project.created_time|date:"Y年m月d日 H:i:s"}}创建。部署在{{project.domain}}服务器上。项目简介:{{project.description}} <span>包含以下模块:</span</p></div>
+                        <div>
+                        {% for module in modules%}
+                            <a href="/rango/apis?mid={{module.item.id}}" class="col-sm-4 module">
+                            <div class="row"><h4>{{module.item.name}}</h4></div>
+                            <div class="row">
+                                <span>成功<span class="success_font">{{module.success}}</span>个</span>
+                                <span>失败<span class="failure_font">{{module.failure}}</span>个</span>
+                            </div>
+                            </a>
+                        {% endfor %}
+                        {% if perms.script.add_module %}
+                        <a href="/rango/module/create?pid={{project.id}}" class="col-sm-4 module btn btn-primary">
+                            <h1>+添加模块</h1>
+                        </a>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        
+                        <div>
+                        <a class="btn pull-right" data-toggle="tooltip" data-placement="bottom" title="运行CASE" href="/rango/all/test?pid={{project.id}}"><span class="glyphicon glyphicon-flash"></span>Run Test</a>
+                        <a class="btn pull-right" data-toggle="tooltip" data-placement="bottom" title="查看报告" href="/rango/all/report?pid={{project.id}}"><span class="glyphicon glyphicon-list-alt"></span>报告</a>
+                        {% if perms.script.change_project%}
+                        <a class="btn pull-right" data-toggle="tooltip" data-placement="bottom" title="关闭项目" href="/rango/project/inactive?id={{project.id}}"><span class="glyphicon glyphicon-off" style="color:red"></span>关闭</a>
+                        <a class="btn pull-right" data-toggle="tooltip" data-placement="bottom" title="定时任务" href="/rango/project/setting?id={{project.id}}"><span class="glyphicon glyphicon-cog"></span>设置</a>
+                        <a class="btn pull-right" data-toggle="tooltip" data-placement="bottom" title="编辑项目" href="/rango/project/edit?id={{project.id}}"><span class="glyphicon glyphicon-edit"></span>编辑</a>
+                        {% endif %}
+                       </div>
+                        
+                        <div id="view" style="height:300px"></div>
+                    </div>
+                </div>
+    <script type="text/javascript">
+    var project_data=[];
+    project_data.push({
+                name:'{{project.name}}',
+                data:[{
+                    name:"成功",
+                    value:{{success}}
+                },{
+                    name:"失败",
+                    value:{{failure}}
+                },{
+                    name:"未测试",
+                    value:{{case_total}}-{{success}}-{{failure}}
+                }]});
+        var option_project = {
+    title : {
+        text: '{{project.name}}测试情况',
+        x:'right',
+        y:'bottom'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['成功','失败','未测试']
+    },
+    calculable : true,
+    series : [
+        {
+            name:'测试结果',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:project_data[0].data
+        }
+    ]
+};
+ require(['echarts','echarts/chart/pie','echarts/chart/line'],function(ec){
+ ec.init(document.getElementById("view"),"blue").setOption(option_project);
+   });
+    </script>
+{% endblock %}

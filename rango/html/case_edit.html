@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title%}API列表{% endblock%}
+{% block content %}
+	<ol class="breadcrumb">
+  		<li><a href="/rango/projects">项目</a></li>
+  		<li><a href="/rango/project?id={{case.api.module.project.id}}">{{ case.api.module.project.name }}</a></li>
+        <li><a href="/rango/apis?mid={{case.api.module.id}}">{{ case.api.module.name }}</a></li>
+        <li><a href="/rango/cases?aid={{case.api.id}}">{{ case.api.name }}</a></li>
+  		<li class="active">CASE</li>
+	</ol>
+	<div class="row">
+    <div class="panel panel-primary">
+            <div class="panel-heading"><span class="title">API-{{case.api.name}}</span></div>
+            <div class="panel-body">
+                <div>请求URL:{{case.api.url}}</div>
+                <div>请求方式:{{case.api.method}}</div>
+                {%if case.api.headers %}
+                <div>headers:{{case.api.headers}}</div>
+                {% endif %}
+            </div>
+            <div class="panel-footer">
+		<form class="form-horizontal" role="form" method="POST" action="/rango/case/update?id={{ case.id }}">
+			{% csrf_token %}
+			<div class="form-group">
+    				<label for="expected_status" class="col-sm-2 control-label">期望状态</label>
+   				 <div class="col-sm-5">
+      				<input type="text" name="expected_status" class="form-control" id="expected_status" value="{{case.expected_status}}" placeholder="状态吗">
+   				 </div>
+  			</div>
+			<div class="form-group">
+    		{% ifequal case.api.method 'POST' %}
+    				<label for="body" class="col-sm-2 control-label">BODY</label>
+                    <div class="col-sm-10">
+      				<textarea class="form-control json-body" name="body" id="body" rows="10" placeholder="输入JSON格式切勿输入换行符">{{case.body}}</textarea>
+   				 </div>
+            {% else %}
+                    <label for="body" class="col-sm-2 control-label">应用级参数</label>
+                    <div class="input-group">
+  <span class="input-group-addon">{{case.api.url}}</span>
+  <input type="text" name="body" style="width:500px;" id="body" rows="10" value="{{case.body}}" placeholder="应用级参数">
+</div>
+            {% endifequal %}
+   				 
+  			</div>
+			<div class="form-group">
+    				<label for="expected" class="col-sm-2 control-label">期望结果</label>
+   				 <div class="col-sm-10">
+      				<textarea class="form-control" name="expected" id="expected" rows="10">{{case.expected}}</textarea>
+   				 </div>
+  			</div>
+            <div class="form-group">
+    				<label for="check_sql" class="col-sm-2 control-label">SQL校验语句</label>
+   				 <div class="col-sm-10">
+      				<textarea class="form-control" name="check_sql" id="check_sql" rows="10">{{case.check_sql}}</textarea>
+   				 </div>
+  			</div>
+    			<div class="form-group">
+    				<div class="col-sm-offset-2 col-sm-10">
+      			<button type="submit" class="btn btn-primary">保存</button>
+    			</div>
+  </div>
+</form>
+</div>
+	</div>
+{% endblock %}
