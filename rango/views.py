@@ -16,6 +16,8 @@ import json
 import datetime
 import job
 import util
+
+
 #Enter home page
 def home(request):
 
@@ -74,7 +76,11 @@ def projects_statistic(request):
 
 #Enter one project detailed page
 def project_view(request):
-    project=Project.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        project=Project.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        project=Project.objects.get(id=request.POST.get('id'))
+
     suites=Module.objects.filter(project=project)
     success = 0
     failure = 0
@@ -100,7 +106,11 @@ def project_view(request):
     return render_to_response("project.html",{"project":project,"modules":modules,"success":success,"failure":failure,"case_total":casetotal},RequestContext(request))
 
 def project_setting_view(request):
-    project=Project.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        project=Project.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        project=Project.objects.get(id=request.POST.get('id'))
+
     tname = project.name+"_task"
     try:
         ptask = PeriodicTask.objects.get(name=tname)
@@ -122,7 +132,6 @@ def project_set(request):
     project = Project.objects.get(id=request.POST.get('id'))
     crontab = CrontabSchedule(minute = request.POST.get('minute'),hour = request.POST.get('hour'))
     crontab.save()
-
     tname = project.name+"_task"
     try:
         ptask = PeriodicTask.objects.get(name=tname)
@@ -135,7 +144,6 @@ def project_set(request):
     else:
         ptask = PeriodicTask(name=project.name+"_task",task='rango.script.task.executetest',crontab=crontab,args="["+request.POST.get('id')+"]",enabled=request.POST.get('enable'))
     ptask.save()
-
     address = request.POST.get("address")
     username = request.POST.get("username")
     password = request.POST.get("password")
@@ -167,13 +175,21 @@ def project_set(request):
 
 #Enter api list page
 def apis_view(request):
-    module=Module.objects.get(id=request.POST.get('mid'))
+    if request.method == 'GET':
+        module = Module.objects.get(id=request.GET.get('mid'))
+    elif request.method == 'POST':
+        module = Module.objects.get(id=request.POST.get('mid'))
+
     apis=Api.objects.filter(module=module)
     return render_to_response("apis.html",{"module":module,"apis":apis},RequestContext(request))
 
 #Enter case list view page with api id
 def cases_view(request):
-    api = Api.objects.get(id=request.POST.get('aid'))
+    if request.method == 'GET':
+        api = Api.objects.get(id=request.GET.get('aid'))
+    elif request.method == 'POST':
+        api = Api.objects.get(id=request.POST.get('aid'))
+
     cases = Case.objects.filter(api=api)
     return render_to_response('cases.html',{"api":api,"cases":cases},RequestContext(request))
 
@@ -191,16 +207,25 @@ def project_create_view(request):
     return render_to_response("project_create.html",RequestContext(request))
 
 def project_edit_view(request):
-    project = Project.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        project = Project.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        project = Project.objects.get(id=request.POST.get('id'))
     return render_to_response("project_edit.html",{"project":project},RequestContext(request))
 
 @login_required
 @permission_required('script.change_project')
 def project_update(request):
-    name = request.POST.get("name")
-    description = request.POST.get("description")
-    domain = request.POST.get("domain")
-    project = Project.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        name = request.GET.get("name")
+        description = request.GET.get("description")
+        domain = request.GET.get("domain")
+        project = Project.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        domain = request.POST.get("domain")
+        project = Project.objects.get(id=request.POST.get('id'))
     project.name = name
     project.domain = domain
     project.description = description
@@ -209,19 +234,28 @@ def project_update(request):
 
 #Enter one page for creating module with project id
 def module_create_view(request):
-    pid = request.POST.get('pid')
+    if request.method == 'GET':
+        pid = request.GET.get('pid')
+    elif request.method == 'POST':
+        pid = request.POST.get('pid')
     project = Project.objects.get(id=pid)
     return render_to_response("module_create.html",{"project":project},RequestContext(request))
 
 #Enter one page for creating api
 def api_create_view(request):
-    mid = request.POST.get('mid')
+    if request.method == 'GET':
+        mid = request.GET.get('mid')
+    elif request.method == 'POST':
+        mid = request.POST.get('mid')
     module = Module.objects.get(id=mid)
     return render_to_response("api_create.html",{"module":module},RequestContext(request))
 
 #Enter one page for creating case
 def case_create_view(request):
-    api = Api.objects.get(id=request.POST.get('aid'))
+    if request.method == 'GET':
+        api = Api.objects.get(id=request.GET.get('aid'))
+    elif request.method == 'POST':
+        api = Api.objects.get(id=request.POST.get('aid'))
     print (api.method)
     return render_to_response("case_create.html",{"api":api},RequestContext(request))
 
@@ -230,10 +264,15 @@ def case_create_view(request):
 @permission_required('script.add_project')
 def project_save(request):
     user = request.user
-    name = request.POST.get("name")
-    description = request.POST.get("description")
-    domain = request.POST.get("domain")
-    status = '0'
+    if request.method == 'GET':
+        name = request.GET.get("name")
+        description = request.GET.get("description")
+        domain = request.GET.get("domain")
+    elif request.method == 'POST':
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        domain = request.POST.get("domain")
+    status = '1'
     project = Project(created_user=user,name=name,description=description,domain=domain,status=status)
     project.save()
     return HttpResponseRedirect('/rango/projects')
@@ -242,9 +281,13 @@ def project_save(request):
 @login_required
 @permission_required('script.add_module')
 def module_save(request):
-    project = Project.objects.get(id=request.POST.get('pid'))
+    if request.method == 'GET':
+        project = Project.objects.get(id=request.GET.get('pid'))
+        name = request.GET.get('name')
+    elif request.method == 'POST':
+        project = Project.objects.get(id=request.POST.get('pid'))
+        name = request.POST.get('name')
     user = request.user
-    name = request.POST.get('name')
     module = Module(project=project,created_user=user,name=name)
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(project.id))
@@ -265,7 +308,10 @@ def api_save(request):
 
 #Enter one page for editing api information
 def api_edit_view(request):
-    api = Api.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        api = Api.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        api = Api.objects.get(id=request.POST.get('id'))
     return render_to_response('api_edit.html',{'api':api},RequestContext(request))
 
 #Execute operation for updating api information
@@ -282,7 +328,10 @@ def api_update(request):
 
 #Open page for editing case with api id
 def case_edit_view(request):
-    case = Case.objects.get(id=request.POST.get('id'))
+    if request.method == 'GET':
+        case = Case.objects.get(id=request.GET.get('id'))
+    elif request.method == 'POST':
+        case = Case.objects.get(id=request.POST.get('id'))
     return render_to_response('case_edit.html',{'case':case},RequestContext(request))
 
 #Execute update operation for the given case
@@ -313,7 +362,7 @@ def case_save(request):
 @login_required
 @permission_required('script.change_project')
 def project_inactive(request):
-    project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     project.status = True
     project.save()
     return HttpResponseRedirect('/rango/projects')
@@ -321,7 +370,7 @@ def project_inactive(request):
 @login_required
 @permission_required('script.change_project')
 def project_active(request):
-    project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     project.status = True
     project.save()
     return HttpResponseRedirect('/rango/projects')
@@ -329,7 +378,7 @@ def project_active(request):
 @login_required
 @permission_required('script.change_module')
 def module_inactive(request):
-    module = Module.objects.get(id=request.POST.get('id'))
+    module = Module.objects.get(id=request.GET.get('id'))
     module.status = False
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(module.project.id))
@@ -337,7 +386,7 @@ def module_inactive(request):
 @login_required
 @permission_required('script.change_module')
 def module_active(request):
-    module = Module.objects.get(id=request.POST.get('id'))
+    module = Module.objects.get(id=request.GET.get('id'))
     module.status = False
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(module.project.id))
@@ -345,7 +394,7 @@ def module_active(request):
 @login_required
 @permission_required('script.change_api')
 def api_inactive(request):
-    api = Api.objects.get(id=request.POST.get('id'))
+    api = Api.objects.get(id=request.GET.get('id'))
     api.status = True
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(api.module.id))
@@ -353,7 +402,7 @@ def api_inactive(request):
 @login_required
 @permission_required('script.change_api')
 def api_active(request):
-    api = Api.objects.get(id=request.POST.get('id'))
+    api = Api.objects.get(id=request.GET.get('id'))
     api.status = False
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(api.module.id))
@@ -361,7 +410,7 @@ def api_active(request):
 @login_required
 @permission_required('script.change_case')
 def case_inactive(request):
-    case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     case.status = True
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
@@ -369,7 +418,7 @@ def case_inactive(request):
 @login_required
 @permission_required('script.change_case')
 def case_active(request):
-    case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     case.status = False
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
@@ -382,7 +431,6 @@ def case_report_view(request):
 def api_report_view(request):
     api = Api.objects.get(id=request.POST.get('aid'))
     cases = Case.objects.filter(api=api)
-
     reports = list()
     for case in cases:
         reports.extend(Report.objects.filter(case=case))
@@ -415,7 +463,6 @@ def all_report_view(request):
                 cases.extend(Case.objects.filter(api=api))
         for case in cases:
             reports.extend(Report.objects.filter(case=case))
-
     return render_to_response('all_report.html',{'project':project,'reports':reports},RequestContext(request))
 
 #Test one case and generate report
@@ -434,7 +481,6 @@ def case_test(request):
 def multi_case_test(request):
     api = Api.objects.get(id=request.POST.get('aid'))
     cases = Case.objects.filter(api=api)
-
     for case in cases:
         job.test(case,request.user)
 
@@ -445,7 +491,6 @@ def multi_case_test(request):
 @login_required
 def all_test(request):
     project = Project.objects.get(id=request.POST.get('pid'))
-
     #init database
     try:
         dbconfigure = DbConfigure.objects.get(project=project)
@@ -465,7 +510,6 @@ def all_test(request):
 def project_report(request):
     project = Project.objects.get(id=request.POST.get('id'))
     modules = Module.objects.filter(project=project)
-
     apis = list()
     for module in modules:
         apis.extend(Api.objects.filter(module=module))
@@ -482,6 +526,5 @@ def project_report(request):
     total = p.count
     num_pages =  p.num_pages
     data = p.page(request.POST.get('pn')).object_list
-
     result = {"data":serializers.serialize('json', data),"total":total,"numpages":num_pages}
     return HttpResponse(simplejson.dumps(result), mimetype="application/json")

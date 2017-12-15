@@ -25,10 +25,11 @@ class Module(models.Model):
     created_user = models.ForeignKey(User)
     created_time = models.DateTimeField(help_text=_('created date'),
                                         auto_now_add = True)
-    updated_time = models.DateTimeField(help_text=_('updated date'), auto_now =
-    True)
+    updated_time = models.DateTimeField(help_text=_('updated date'), auto_now=True)
+
     def _unicode_(self):
         return self.name
+
 
 class Api(models.Model):
     name = models.CharField(max_length=255)
@@ -40,8 +41,10 @@ class Api(models.Model):
     created_user = models.ForeignKey(User)
     created_time = models.DateTimeField(help_text=_('created date'),auto_now_add = True)
     updated_time = models.DateTimeField(help_text=_('updated date'),auto_now = True)
+
     def _unicode_(self):
         return self.name
+
 
 class Case(models.Model):
     api = models.ForeignKey(Api)
@@ -56,6 +59,7 @@ class Case(models.Model):
     def _unicode_(self):
         return self.name
 
+
 class Report(models.Model):
     case = models.ForeignKey(Case)
     content = models.TextField()
@@ -67,6 +71,7 @@ class Report(models.Model):
     created_time = models.DateTimeField(help_text=_('created date'), auto_now_add = True)
     def _unicode_(self):
         return self.content
+
 
 class DbConfigure(models.Model):
     project = models.ForeignKey(Project)
