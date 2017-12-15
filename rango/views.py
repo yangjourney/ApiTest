@@ -200,7 +200,7 @@ def project_update(request):
     name = request.POST.get("name")
     description = request.POST.get("description")
     domain = request.POST.get("domain")
-    project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     project.name = name
     project.domain = domain
     project.description = description
