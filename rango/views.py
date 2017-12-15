@@ -76,11 +76,7 @@ def projects_statistic(request):
 
 #Enter one project detailed page
 def project_view(request):
-    if request.method == 'GET':
-        project=Project.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        project=Project.objects.get(id=request.POST.get('id'))
-
+    project=Project.objects.get(id=request.GET.get('id'))
     suites=Module.objects.filter(project=project)
     success = 0
     failure = 0
@@ -106,11 +102,7 @@ def project_view(request):
     return render_to_response("project.html",{"project":project,"modules":modules,"success":success,"failure":failure,"case_total":casetotal},RequestContext(request))
 
 def project_setting_view(request):
-    if request.method == 'GET':
-        project=Project.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        project=Project.objects.get(id=request.POST.get('id'))
-
+    project=Project.objects.get(id=request.GET.get('id'))
     tname = project.name+"_task"
     try:
         ptask = PeriodicTask.objects.get(name=tname)
@@ -129,7 +121,7 @@ def project_setting_view(request):
 @login_required
 @permission_required('script.change_project')
 def project_set(request):
-    project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     crontab = CrontabSchedule(minute = request.POST.get('minute'),hour = request.POST.get('hour'))
     crontab.save()
     tname = project.name+"_task"
@@ -142,7 +134,7 @@ def project_set(request):
         ptask.crontab = crontab
         ptask.enabled = request.POST.get('enable')
     else:
-        ptask = PeriodicTask(name=project.name+"_task",task='rango.script.task.executetest',crontab=crontab,args="["+request.POST.get('id')+"]",enabled=request.POST.get('enable'))
+        ptask = PeriodicTask(name=project.name+"_task",task='rango.script.task.executetest',crontab=crontab,args="["+request.GET.get('id')+"]",enabled=request.POST.get('enable'))
     ptask.save()
     address = request.POST.get("address")
     username = request.POST.get("username")
@@ -171,25 +163,17 @@ def project_set(request):
         dbconfigure.dbname=dbname
         dbconfigure.port=port
     dbconfigure.save()
-    return HttpResponseRedirect("/rango/project?id="+request.POST.get('id'))
+    return HttpResponseRedirect("/rango/project?id="+request.GET.get('id'))
 
 #Enter api list page
 def apis_view(request):
-    if request.method == 'GET':
-        module = Module.objects.get(id=request.GET.get('mid'))
-    elif request.method == 'POST':
-        module = Module.objects.get(id=request.POST.get('mid'))
-
+    module = Module.objects.get(id=request.GET.get('mid'))
     apis=Api.objects.filter(module=module)
     return render_to_response("apis.html",{"module":module,"apis":apis},RequestContext(request))
 
 #Enter case list view page with api id
 def cases_view(request):
-    if request.method == 'GET':
-        api = Api.objects.get(id=request.GET.get('aid'))
-    elif request.method == 'POST':
-        api = Api.objects.get(id=request.POST.get('aid'))
-
+    api = Api.objects.get(id=request.GET.get('aid'))
     cases = Case.objects.filter(api=api)
     return render_to_response('cases.html',{"api":api,"cases":cases},RequestContext(request))
 
@@ -207,25 +191,16 @@ def project_create_view(request):
     return render_to_response("project_create.html",RequestContext(request))
 
 def project_edit_view(request):
-    if request.method == 'GET':
-        project = Project.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     return render_to_response("project_edit.html",{"project":project},RequestContext(request))
 
 @login_required
 @permission_required('script.change_project')
 def project_update(request):
-    if request.method == 'GET':
-        name = request.GET.get("name")
-        description = request.GET.get("description")
-        domain = request.GET.get("domain")
-        project = Project.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        domain = request.POST.get("domain")
-        project = Project.objects.get(id=request.POST.get('id'))
+    name = request.POST.get("name")
+    description = request.POST.get("description")
+    domain = request.POST.get("domain")
+    project = Project.objects.get(id=request.POST.get('id'))
     project.name = name
     project.domain = domain
     project.description = description
@@ -234,28 +209,19 @@ def project_update(request):
 
 #Enter one page for creating module with project id
 def module_create_view(request):
-    if request.method == 'GET':
-        pid = request.GET.get('pid')
-    elif request.method == 'POST':
-        pid = request.POST.get('pid')
+    pid = request.GET.get('pid')
     project = Project.objects.get(id=pid)
     return render_to_response("module_create.html",{"project":project},RequestContext(request))
 
 #Enter one page for creating api
 def api_create_view(request):
-    if request.method == 'GET':
-        mid = request.GET.get('mid')
-    elif request.method == 'POST':
-        mid = request.POST.get('mid')
+    mid = request.GET.get('mid')
     module = Module.objects.get(id=mid)
     return render_to_response("api_create.html",{"module":module},RequestContext(request))
 
 #Enter one page for creating case
 def case_create_view(request):
-    if request.method == 'GET':
-        api = Api.objects.get(id=request.GET.get('aid'))
-    elif request.method == 'POST':
-        api = Api.objects.get(id=request.POST.get('aid'))
+    api = Api.objects.get(id=request.GET.get('aid'))
     print (api.method)
     return render_to_response("case_create.html",{"api":api},RequestContext(request))
 
@@ -264,15 +230,10 @@ def case_create_view(request):
 @permission_required('script.add_project')
 def project_save(request):
     user = request.user
-    if request.method == 'GET':
-        name = request.GET.get("name")
-        description = request.GET.get("description")
-        domain = request.GET.get("domain")
-    elif request.method == 'POST':
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        domain = request.POST.get("domain")
-    status = '1'
+    name = request.GET.get("name")
+    description = request.GET.get("description")
+    domain = request.GET.get("domain")
+    status = False
     project = Project(created_user=user,name=name,description=description,domain=domain,status=status)
     project.save()
     return HttpResponseRedirect('/rango/projects')
@@ -281,44 +242,38 @@ def project_save(request):
 @login_required
 @permission_required('script.add_module')
 def module_save(request):
-    if request.method == 'GET':
-        project = Project.objects.get(id=request.GET.get('pid'))
-        name = request.GET.get('name')
-    elif request.method == 'POST':
-        project = Project.objects.get(id=request.POST.get('pid'))
-        name = request.POST.get('name')
+    project = Project.objects.get(id=request.GET.get('pid'))
+    name = request.POST.get('name')
     user = request.user
-    module = Module(project=project,created_user=user,name=name)
+    status = False
+    module = Module(project=project,created_user=user,name=name,status=status)
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(project.id))
-
 #Execute operation for insert one API into table
 @login_required
 @permission_required('script.add_api')
 def api_save(request):
-    module = Module.objects.get(id=request.POST.get('mid'))
+    module = Module.objects.get(id=request.GET.get('mid'))
     user = request.user
     url = request.POST.get('url')
     name = request.POST.get('name')
     method = request.POST.get('method')
     headers = request.POST.get('headers')
-    api = Api(module=module,created_user=user,url=url,method=method,name=name,headers=headers)
+    status = False
+    api = Api(module=module,created_user=user,url=url,method=method,name=name,headers=headers,status=status)
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(module.id))
 
 #Enter one page for editing api information
 def api_edit_view(request):
-    if request.method == 'GET':
-        api = Api.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        api = Api.objects.get(id=request.POST.get('id'))
+    api = Api.objects.get(id=request.GET.get('id'))
     return render_to_response('api_edit.html',{'api':api},RequestContext(request))
 
 #Execute operation for updating api information
 @login_required
 @permission_required('script.change_api')
 def api_update(request):
-    api = Api.objects.get(id=request.POST.get('id'))
+    api = Api.objects.get(id=request.GET.get('id'))
     api.name = request.POST.get('name')
     api.url = request.POST.get('url')
     api.method = request.POST.get('method')
@@ -328,17 +283,14 @@ def api_update(request):
 
 #Open page for editing case with api id
 def case_edit_view(request):
-    if request.method == 'GET':
-        case = Case.objects.get(id=request.GET.get('id'))
-    elif request.method == 'POST':
-        case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     return render_to_response('case_edit.html',{'case':case},RequestContext(request))
 
 #Execute update operation for the given case
 @login_required
 @permission_required('script.change_case')
 def case_update(request):
-    case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     case.body = request.POST.get('body')
     case.expected_status = request.POST.get('expected_status')
     case.expected = request.POST.get('expected')
@@ -350,13 +302,14 @@ def case_update(request):
 @login_required
 @permission_required('script.add_case')
 def case_save(request):
-    api = Api.objects.get(id=request.POST.get('aid'))
+    api = Api.objects.get(id=request.GET.get('aid'))
     body = request.POST.get('body')
     expected_status = request.POST.get('expected_status')
     expected = request.POST.get('expected')
     user = request.user
     check_sql = request.POST.get('check_sql')
-    case = Case(api=api,body=body,expected_status=expected_status,expected=expected,created_user=user,check_sql=check_sql)
+    status = False
+    case = Case(api=api,body=body,expected_status=expected_status,expected=expected,created_user=user,check_sql=check_sql,status=status)
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(api.id))
 @login_required
@@ -371,7 +324,7 @@ def project_inactive(request):
 @permission_required('script.change_project')
 def project_active(request):
     project = Project.objects.get(id=request.GET.get('id'))
-    project.status = True
+    project.status = False
     project.save()
     return HttpResponseRedirect('/rango/projects')
 
@@ -424,12 +377,12 @@ def case_active(request):
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
 
 def case_report_view(request):
-    case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     reports = Report.objects.filter(case=case)
     return render_to_response('case_report.html',{'case':case,'reports':reports},RequestContext(request))
 
 def api_report_view(request):
-    api = Api.objects.get(id=request.POST.get('aid'))
+    api = Api.objects.get(id=request.GET.get('aid'))
     cases = Case.objects.filter(api=api)
     reports = list()
     for case in cases:
@@ -440,7 +393,7 @@ def api_report_view(request):
 def all_report_view(request):
     reports = list()
     cases = list()
-    project = Project.objects.get(id=request.POST.get('pid'))
+    project = Project.objects.get(id=request.GET.get('pid'))
     modules = Module.objects.filter(project=project)
     if request.POST.get('filter')=='success':
         for module in modules:
@@ -471,7 +424,7 @@ def all_report_view(request):
 def case_test(request):
 
     #Query all required information for testing
-    case = Case.objects.get(id=request.POST.get('id'))
+    case = Case.objects.get(id=request.GET.get('id'))
     job.test(case,request.user)
     return HttpResponseRedirect('/rango/case/report?id='+str(case.id))
 
@@ -479,7 +432,7 @@ def case_test(request):
 @permission_required('script.add_report')
 @login_required
 def multi_case_test(request):
-    api = Api.objects.get(id=request.POST.get('aid'))
+    api = Api.objects.get(id=request.GET.get('aid'))
     cases = Case.objects.filter(api=api)
     for case in cases:
         job.test(case,request.user)
@@ -490,7 +443,7 @@ def multi_case_test(request):
 @permission_required('script.add_report')
 @login_required
 def all_test(request):
-    project = Project.objects.get(id=request.POST.get('pid'))
+    project = Project.objects.get(id=request.GET.get('pid'))
     #init database
     try:
         dbconfigure = DbConfigure.objects.get(project=project)
@@ -508,7 +461,7 @@ def all_test(request):
     return HttpResponseRedirect('/rango/all/report?pid='+str(project.id))
 
 def project_report(request):
-    project = Project.objects.get(id=request.POST.get('id'))
+    project = Project.objects.get(id=request.GET.get('id'))
     modules = Module.objects.filter(project=project)
     apis = list()
     for module in modules:

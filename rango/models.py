@@ -15,8 +15,10 @@ class Project(models.Model):
     created_user = models.ForeignKey(User)
     created_time = models.DateTimeField(help_text=_('created date'),auto_now_add=True)
     updated_time = models.DateTimeField(help_text=_('updated date'), auto_now=True)
+
     def _unicode_(self):
         return self.name
+
 
 class Module(models.Model):
     project = models.ForeignKey(Project)
@@ -56,6 +58,7 @@ class Case(models.Model):
     created_user = models.ForeignKey(User)
     created_time = models.DateTimeField(help_text=_('created date'), auto_now_add = True)
     updated_time = models.DateTimeField(help_text=_('updated date'), auto_now = True)
+
     def _unicode_(self):
         return self.name
 
@@ -69,6 +72,7 @@ class Report(models.Model):
     created_user = models.ForeignKey(User)
     status = models.BooleanField()
     created_time = models.DateTimeField(help_text=_('created date'), auto_now_add = True)
+
     def _unicode_(self):
         return self.content
 
@@ -81,5 +85,6 @@ class DbConfigure(models.Model):
     dbname = models.CharField(max_length=255)
     port = models.IntegerField(blank=True, null=True)
     sql = models.FileField(upload_to = './upload/')
+
     def _unicode_(self):
         return self.address

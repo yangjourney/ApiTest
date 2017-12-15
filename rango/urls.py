@@ -45,5 +45,5 @@ urlpatterns = [
     url(r'^case/report',views.case_report_view),
     url(r'^case/test',views.case_test),
     url(r'^all/test',views.all_test),
-    url(r'^home',views.home),
+    url(r'',views.home),
 ]
