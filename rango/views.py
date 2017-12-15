@@ -222,7 +222,6 @@ def api_create_view(request):
 #Enter one page for creating case
 def case_create_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
-    print (api.method)
     return render_to_response("case_create.html",{"api":api},RequestContext(request))
 
 #Execute operation for insert one project into table

@@ -22,6 +22,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     # url(r'^$',views.index,name='index'),
+    url(r'^accounts/', include('rango.urls')),
     url(r'^rango/', include('rango.urls')),
     # 以上映射将所有开头为 rango/ 的URL指向rango应用。
     url(r'^admin/', admin.site.urls),
