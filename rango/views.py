@@ -1,6 +1,6 @@
 import os,random
 from django.shortcuts import render_to_response
-#from django.utils import simplejson
+# from django.utils import simplejson
 import simplejson
 from django.core import serializers
 from django.http import HttpResponseRedirect,HttpResponse
@@ -18,17 +18,19 @@ import job
 import util
 
 
-#Enter home page
+# Enter home page
 def home(request):
 
     return render_to_response("home.html",RequestContext(request))
 
-#Enter login page
+
+# Enter login page
 def sign_in(request):
 
     return render_to_response("login.html",RequestContext(request))
 
-#Enter project list page
+
+# Enter project list page
 def projects_view(request):
     list = []
     data=Project.objects.all()
@@ -49,7 +51,8 @@ def projects_view(request):
         list.append(dict)
     return render_to_response("projects.html",{"data":list},RequestContext(request))
 
-#make projects statistic
+
+# make projects statistic
 def projects_statistic(request):
     list = []
     data=Project.objects.all()
@@ -74,7 +77,8 @@ def projects_statistic(request):
         list.append(dict)
     return HttpResponse(simplejson.dumps(list), mimetype="application/json")
 
-#Enter one project detailed page
+
+# Enter one project detailed page
 def project_view(request):
     project=Project.objects.get(id=request.GET.get('id'))
     suites=Module.objects.filter(project=project)
@@ -101,6 +105,7 @@ def project_view(request):
 
     return render_to_response("project.html",{"project":project,"modules":modules,"success":success,"failure":failure,"case_total":casetotal},RequestContext(request))
 
+
 def project_setting_view(request):
     project=Project.objects.get(id=request.GET.get('id'))
     tname = project.name+"_task"
@@ -117,6 +122,7 @@ def project_setting_view(request):
     setting['task']=ptask
     setting['db']=dbconfigure
     return render_to_response("setting.html",{"project":project,"setting":setting},RequestContext(request))
+
 
 @login_required
 @permission_required('script.change_project')
@@ -165,34 +171,41 @@ def project_set(request):
     dbconfigure.save()
     return HttpResponseRedirect("/rango/project?id="+request.GET.get('id'))
 
-#Enter api list page
+
+# Enter api list page
 def apis_view(request):
     module = Module.objects.get(id=request.GET.get('mid'))
     apis=Api.objects.filter(module=module)
     return render_to_response("apis.html",{"module":module,"apis":apis},RequestContext(request))
 
-#Enter case list view page with api id
+
+# Enter case list view page with api id
 def cases_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
     cases = Case.objects.filter(api=api)
     return render_to_response('cases.html',{"api":api,"cases":cases},RequestContext(request))
 
-#Enter reports view page
+
+# Enter reports view page
 def reports_view(request):
     data=Project.objects.all()
     return render_to_response("reports.html",{"data":data},RequestContext(request))
 
-#Open one page containing our information
+
+# Open one page containing our information
 def about_view(request):
     return render_to_response("about.html",RequestContext(request))
 
-#Open one page for creating project
+
+# Open one page for creating project
 def project_create_view(request):
     return render_to_response("project_create.html",RequestContext(request))
+
 
 def project_edit_view(request):
     project = Project.objects.get(id=request.GET.get('id'))
     return render_to_response("project_edit.html",{"project":project},RequestContext(request))
+
 
 @login_required
 @permission_required('script.change_project')
@@ -207,37 +220,42 @@ def project_update(request):
     project.save()
     return HttpResponseRedirect("/rango/projects")
 
-#Enter one page for creating module with project id
+
+# Enter one page for creating module with project id
 def module_create_view(request):
     pid = request.GET.get('pid')
     project = Project.objects.get(id=pid)
     return render_to_response("module_create.html",{"project":project},RequestContext(request))
 
-#Enter one page for creating api
+
+# Enter one page for creating api
 def api_create_view(request):
     mid = request.GET.get('mid')
     module = Module.objects.get(id=mid)
     return render_to_response("api_create.html",{"module":module},RequestContext(request))
 
-#Enter one page for creating case
+
+# Enter one page for creating case
 def case_create_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
     return render_to_response("case_create.html",{"api":api},RequestContext(request))
 
-#Execute operation for insert one project into table
+
+# Execute operation for insert one project into table
 @login_required
 @permission_required('script.add_project')
 def project_save(request):
     user = request.user
-    name = request.GET.get("name")
-    description = request.GET.get("description")
-    domain = request.GET.get("domain")
+    name = request.POST.get("name")
+    description = request.POST.get("description")
+    domain = request.POST.get("domain")
     status = False
     project = Project(created_user=user,name=name,description=description,domain=domain,status=status)
     project.save()
     return HttpResponseRedirect('/rango/projects')
 
-#Execute operation for insert one module into table
+
+# Execute operation for insert one module into table
 @login_required
 @permission_required('script.add_module')
 def module_save(request):
@@ -248,7 +266,9 @@ def module_save(request):
     module = Module(project=project,created_user=user,name=name,status=status)
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(project.id))
-#Execute operation for insert one API into table
+
+
+# Execute operation for insert one API into table
 @login_required
 @permission_required('script.add_api')
 def api_save(request):
@@ -263,12 +283,14 @@ def api_save(request):
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(module.id))
 
-#Enter one page for editing api information
+
+# Enter one page for editing api information
 def api_edit_view(request):
     api = Api.objects.get(id=request.GET.get('id'))
     return render_to_response('api_edit.html',{'api':api},RequestContext(request))
 
-#Execute operation for updating api information
+
+# Execute operation for updating api information
 @login_required
 @permission_required('script.change_api')
 def api_update(request):
@@ -280,12 +302,14 @@ def api_update(request):
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(api.module.id))
 
-#Open page for editing case with api id
+
+# Open page for editing case with api id
 def case_edit_view(request):
     case = Case.objects.get(id=request.GET.get('id'))
     return render_to_response('case_edit.html',{'case':case},RequestContext(request))
 
-#Execute update operation for the given case
+
+# Execute update operation for the given case
 @login_required
 @permission_required('script.change_case')
 def case_update(request):
@@ -297,7 +321,8 @@ def case_update(request):
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
 
-#Execute operation for insert one case into table
+
+# Execute operation for insert one case into table
 @login_required
 @permission_required('script.add_case')
 def case_save(request):
@@ -311,6 +336,8 @@ def case_save(request):
     case = Case(api=api,body=body,expected_status=expected_status,expected=expected,created_user=user,check_sql=check_sql,status=status)
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(api.id))
+
+
 @login_required
 @permission_required('script.change_project')
 def project_inactive(request):
@@ -318,6 +345,7 @@ def project_inactive(request):
     project.status = True
     project.save()
     return HttpResponseRedirect('/rango/projects')
+
 
 @login_required
 @permission_required('script.change_project')
@@ -327,6 +355,7 @@ def project_active(request):
     project.save()
     return HttpResponseRedirect('/rango/projects')
 
+
 @login_required
 @permission_required('script.change_module')
 def module_inactive(request):
@@ -334,6 +363,7 @@ def module_inactive(request):
     module.status = False
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(module.project.id))
+
 
 @login_required
 @permission_required('script.change_module')
@@ -343,6 +373,7 @@ def module_active(request):
     module.save()
     return HttpResponseRedirect('/rango/project?id='+str(module.project.id))
 
+
 @login_required
 @permission_required('script.change_api')
 def api_inactive(request):
@@ -350,6 +381,7 @@ def api_inactive(request):
     api.status = True
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(api.module.id))
+
 
 @login_required
 @permission_required('script.change_api')
@@ -359,6 +391,7 @@ def api_active(request):
     api.save()
     return HttpResponseRedirect('/rango/apis?mid='+str(api.module.id))
 
+
 @login_required
 @permission_required('script.change_case')
 def case_inactive(request):
@@ -366,6 +399,7 @@ def case_inactive(request):
     case.status = True
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
+
 
 @login_required
 @permission_required('script.change_case')
@@ -375,10 +409,12 @@ def case_active(request):
     case.save()
     return HttpResponseRedirect('/rango/cases?aid='+str(case.api.id))
 
+
 def case_report_view(request):
     case = Case.objects.get(id=request.GET.get('id'))
     reports = Report.objects.filter(case=case)
     return render_to_response('case_report.html',{'case':case,'reports':reports},RequestContext(request))
+
 
 def api_report_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
@@ -388,6 +424,7 @@ def api_report_view(request):
         reports.extend(Report.objects.filter(case=case))
 
     return render_to_response('api_report.html',{'api':api,'reports':reports},RequestContext(request))
+
 
 def all_report_view(request):
     reports = list()
@@ -417,17 +454,19 @@ def all_report_view(request):
             reports.extend(Report.objects.filter(case=case))
     return render_to_response('all_report.html',{'project':project,'reports':reports},RequestContext(request))
 
-#Test one case and generate report
+
+# Test one case and generate report
 @login_required
 @permission_required('script.add_report')
 def case_test(request):
 
-    #Query all required information for testing
+    # Query all required information for testing
     case = Case.objects.get(id=request.GET.get('id'))
     job.test(case,request.user)
     return HttpResponseRedirect('/rango/case/report?id='+str(case.id))
 
-#Test multi cases and generate report
+
+# Test multi cases and generate report
 @permission_required('script.add_report')
 @login_required
 def multi_case_test(request):
@@ -438,12 +477,13 @@ def multi_case_test(request):
 
     return HttpResponseRedirect('/rango/api/report?aid='+str(api.id))
 
-#Test multi cases and generate report
+
+# Test multi cases and generate report
 @permission_required('script.add_report')
 @login_required
 def all_test(request):
     project = Project.objects.get(id=request.GET.get('pid'))
-    #init database
+    # init database
     try:
         dbconfigure = DbConfigure.objects.get(project=project)
         job.run_sql_file(dbconfigure.sql,dbconfigure.address,dbconfigure.username,dbconfigure.password)
@@ -458,6 +498,7 @@ def all_test(request):
             for case in cases:
                 job.test(case,request.user)
     return HttpResponseRedirect('/rango/all/report?pid='+str(project.id))
+
 
 def project_report(request):
     project = Project.objects.get(id=request.GET.get('id'))
