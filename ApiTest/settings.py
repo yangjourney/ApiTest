@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import sys
+import djcelery
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -165,3 +167,16 @@ LOGGING = {
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+#setting for job http://docs.celeryproject.org/en/master/django/first-steps-with-django.html#using-celery-with-django
+djcelery.setup_loader()
+
+BROKER_URL = "amqp://guest:guest@localhost:5672//"
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_DEFAULT_QUEUE = "default_dongwm"
+CELERYD_MAX_TASKS_PER_CHILD = 40
+CELERYD_PREFETCH_MULTIPLIER = 4
+CELERYD_CONCURRENCY = 50
+CELERY_TASK_RESULT_EXPIRES = 1200
+CELERY_RESULT_BACKEND = "amqp"

@@ -431,14 +431,14 @@ def all_report_view(request):
     cases = list()
     project = Project.objects.get(id=request.GET.get('pid'))
     modules = Module.objects.filter(project=project)
-    if request.POST.get('filter')=='success':
+    if request.GET.get('filter')=='success':
         for module in modules:
             apis = Api.objects.filter(module=module)
             for api in apis:
                 cases.extend(Case.objects.filter(api=api))
         for case in cases:
             reports.extend(Report.objects.filter(case=case,status=True))
-    elif request.POST.get('filter')=='failure':
+    elif request.GET.get('filter')=='failure':
         for module in modules:
             apis = Api.objects.filter(module=module)
             for api in apis:
@@ -518,6 +518,6 @@ def project_report(request):
     p = Paginator(reports, 10)
     total = p.count
     num_pages =  p.num_pages
-    data = p.page(request.POST.get('pn')).object_list
+    data = p.page(request.GET.get('pn')).object_list
     result = {"data":serializers.serialize('json', data),"total":total,"numpages":num_pages}
     return HttpResponse(simplejson.dumps(result), mimetype="application/json")

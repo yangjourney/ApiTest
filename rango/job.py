@@ -12,7 +12,6 @@ def test(case,user):
 #If exist non empty check sql query statements, it will execute them
     project = case.api.module.project
     dbconfigure = DbConfigure.objects.get(project=project)
-    a=DbConfigure
     dbresult = ""
     if case.check_sql != "":
         dbresult = run_sql(case.check_sql,dbconfigure.address,dbconfigure.username,dbconfigure.password,dbconfigure.dbname)
