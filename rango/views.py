@@ -140,7 +140,7 @@ def project_set(request):
         ptask.crontab = crontab
         ptask.enabled = request.POST.get('enable')
     else:
-        ptask = PeriodicTask(name=project.name+"_task",task='rango.script.task.executetest',crontab=crontab,args="["+request.GET.get('id')+"]",enabled=request.POST.get('enable'))
+        ptask = PeriodicTask(name=project.name+"_task",task='rango.script.task.executetest',crontab=crontab,args="["+request.GET.get('id')+"]",enabled = request.POST.get('enable'))
     ptask.save()
     address = request.POST.get("address")
     username = request.POST.get("username")

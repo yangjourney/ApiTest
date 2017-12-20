@@ -175,8 +175,8 @@ STATIC_URL = '/static/'
 djcelery.setup_loader()
 import django
 django.setup()
-#BROKER_URL = "amqp://guest:guest@localhost:5672//"
-BROKER_URL = 'django://'
+BROKER_URL = "amqp://admin:admin123@10.2.3.26:8888//"
+#BROKER_URL = 'django://10.2.3.26:8888'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_DEFAULT_QUEUE = "default_dongwm"
 CELERYD_MAX_TASKS_PER_CHILD = 40
