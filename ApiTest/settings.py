@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for ApiTest project.
 
@@ -40,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'kombu.transport.django',
     'rango',
-    'djcelery'
+    'djcelery',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -171,8 +173,10 @@ STATIC_URL = '/static/'
 
 #setting for job http://docs.celeryproject.org/en/master/django/first-steps-with-django.html#using-celery-with-django
 djcelery.setup_loader()
-
-BROKER_URL = "amqp://guest:guest@localhost:5672//"
+import django
+django.setup()
+#BROKER_URL = "amqp://guest:guest@localhost:5672//"
+BROKER_URL = 'django://'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_DEFAULT_QUEUE = "default_dongwm"
 CELERYD_MAX_TASKS_PER_CHILD = 40

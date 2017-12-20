@@ -8,6 +8,10 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 """
 
 import os
+import site
+import sys
+SITE_DIR = os.path.dirname(__file__)
+PROJECT_ROOT = os.path.dirname(SITE_DIR)
 
 from django.core.wsgi import get_wsgi_application
 

@@ -4,7 +4,7 @@ import logging
 import time
 from djcelery import celery
 from rango.models import Project,Module,Report,Api,Case,DbConfigure
-from django.utils import simplejson
+import simplejson
 import pymysql as mdb
 
 # -*- coding:utf-8 -*- 
@@ -312,6 +312,7 @@ def run_sql_file(filename, address,username,password):
         connection.close()
     except:
         print ("errors ignored")
+
 
 @celery.task
 def executetest(pid):
