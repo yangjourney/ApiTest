@@ -1,29 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b310f445-7196-492d-bc0b-37eebe535990" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../ApiTest/rango/static/img/demo1.jpg" />
+    <list default="true" id="b310f445-7196-492d-bc0b-37eebe535990" name="Default" comment="Update&#10;Django==1.9.1&#10;=====================&#10;1、增加并调整tasks，目前暂时不能生效，正在检查">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../ApiTest/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/about.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/about.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/all_report.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/all_report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/api_create.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/api_create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/api_edit.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/api_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/api_report.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/api_report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/apis.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/apis.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/base.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/case_create.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/case_create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/case_edit.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/case_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/case_report.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/case_report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/cases.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/cases.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/home.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/module_create.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/module_create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/project.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/project_create.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/project_create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/project_edit.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/project_edit.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/projects.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/projects.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/report.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/reports.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/reports.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ApiTest/rango/html/setting.html" afterPath="$PROJECT_DIR$/../ApiTest/rango/html/setting.html" />
     </list>
     <ignored path="$PROJECT_DIR$/../ApiTest/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +22,8 @@
       <file leaf-file-name="home.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../ApiTest/rango/html/home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="78" column="52" lean-forward="true" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
+            <state relative-caret-position="1710">
+              <caret line="90" column="37" lean-forward="true" selection-start-line="90" selection-start-column="37" selection-end-line="90" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -211,6 +191,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rango" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApiTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApiTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rango" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApiTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ApiTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rango" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -983,7 +1003,7 @@
       <option name="presentableId" value="Default" />
       <updated>1513239684880</updated>
       <workItem from="1513239693931" duration="29763000" />
-      <workItem from="1513558466303" duration="59013000" />
+      <workItem from="1513558466303" duration="59587000" />
     </task>
     <task id="LOCAL-00001" summary="Update&#10;Django==1.9.1&#10;问题：&#10;目前还有问题啊。尤其是save部分，报错啊，，，">
       <created>1513309784937</created>
@@ -1069,11 +1089,25 @@
       <option name="project" value="LOCAL" />
       <updated>1513824895125</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Update&#10;Django==1.9.1&#10;=====================&#10;1、增加并调整tasks，目前暂时不能生效，正在检查">
+      <created>1513837374006</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1513837374006</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Update&#10;Django==1.9.1&#10;=====================&#10;1、增加并调整tasks，目前暂时不能生效，正在检查">
+      <created>1513837412889</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1513837412889</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88776000" />
+    <option name="totallyTimeSpent" value="89350000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1590,8 +1624,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../ApiTest/rango/html/home.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="78" column="52" lean-forward="true" selection-start-line="78" selection-start-column="52" selection-end-line="78" selection-end-column="52" />
+        <state relative-caret-position="1710">
+          <caret line="90" column="37" lean-forward="true" selection-start-line="90" selection-start-column="37" selection-end-line="90" selection-end-column="37" />
           <folding />
         </state>
       </provider>
