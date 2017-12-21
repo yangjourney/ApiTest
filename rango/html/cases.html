@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}CASE列表{% endblock %}
+{% block title %}AutoTester Home - CASE列表{% endblock %}
 {% block content %}
 	<ol class="breadcrumb">
   		<li><a href="/rango/projects">项目</a></li>
@@ -43,15 +43,15 @@
                         <td class="col-sm-3">
                         {% if case.status %}
                         {% if perms.script.change_case%}
-                        <a class="btn" href="/rango/case/active?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="激活"><span class="glyphicon glyphicon-pushpin"></span></a>
+                        <a class="btn" href="/rango/case/active?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="激活"><span class="glyphicon glyphicon-pushpin">激活</span></a>
                         {% endif %}
                         {% else %}
                         {% if perms.script.change_case%}
-                            <a class="btn" href="/rango/case/edit?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn" href="/rango/case/inactive?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="禁用"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="btn" href="/rango/case/edit?id={{case.id}}" data-toggle="tooltip" data-placement="left" title="编辑"><span class="glyphicon glyphicon-edit">编辑</span></a>
+                            <a class="btn" href="/rango/case/inactive?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="禁用"><span class="glyphicon glyphicon-trash">禁用</span></a>
                         {% endif %}
-                            <a class="btn" href="/rango/case/test?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash"></span></a>
-                            <a class="btn" href="/rango/case/report?id={{case.id}}" data-toggle="tooltip" data-placement="right" title="查看报告"><span class="glyphicon glyphicon-list-alt"></span></a>
+                            <a class="btn" href="/rango/case/test?id={{case.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash">执行</span></a>
+                            <a class="btn" href="/rango/case/report?id={{case.id}}" data-toggle="tooltip" data-placement="right" title="查看报告"><span class="glyphicon glyphicon-list-alt">报告</span></a>
                                               
                         {% endif %}
                         </td>  

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title%}API列表{% endblock%}
+{% block title%}AutoTester Home - API列表{% endblock%}
 {% block content %}
 	<ol class="breadcrumb">
   		<li><a href="/rango/projects">项目</a></li>
@@ -30,17 +30,17 @@
                         <td>
                         {% if api.status %}
                         {% if perms.script.change_api%}
-                        <<a class="btn" href="/rango/api/active?id={{api.id}}" data-toggle="tooltip" data-placement="right" title="激活"><span class="glyphicon glyphicon-pushpin"></span></a>
+                        <<a class="btn" href="/rango/api/active?id={{api.id}}" data-toggle="tooltip" data-placement="right" title="激活"><span class="glyphicon glyphicon-pushpin">激活</span></a>
                         {% endif%}
                         {% else %}
 						
-                            <a class="btn" href="/rango/cases?aid={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="查看case"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a class="btn" href="/rango/cases?aid={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="查看case"><span class="glyphicon glyphicon-eye-open">查看</span></a>
                             {% if perms.script.change_api%}
-                            <a class="btn" href="/rango/api/edit?id={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="编辑"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn" href="/rango/api/inactive?id={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="禁用"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="btn" href="/rango/api/edit?id={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="编辑"><span class="glyphicon glyphicon-edit">编辑</span></a>
+                            <a class="btn" href="/rango/api/inactive?id={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="禁用"><span class="glyphicon glyphicon-trash">禁用</span></a>
                             {% endif %}
-                            <a class="btn" href="/rango/cases/test?aid={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash"></span></a>
-                            <a class="btn" href="/rango/api/report?aid={{api.id}}" data-toggle="tooltip" data-placement="right" title="查看报告"><span class="glyphicon glyphicon-list-alt"></span></a> 
+                            <a class="btn" href="/rango/cases/test?aid={{api.id}}" data-toggle="tooltip" data-placement="bottom" title="Run Test"><span class="glyphicon glyphicon-flash">执行</span></a>
+                            <a class="btn" href="/rango/api/report?aid={{api.id}}" data-toggle="tooltip" data-placement="right" title="查看报告"><span class="glyphicon glyphicon-list-alt">报告</span></a>
                             
                                                    
                         {% endif %}

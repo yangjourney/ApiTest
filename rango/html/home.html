@@ -1,6 +1,88 @@
 ﻿{% extends "base.html" %}
-{% block title %}AutoTester Home{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}AutoTester Home{% endblock %}
+    </title>
+</head>
 {% block content %}
-    welcome to use api test web.
-      
+    <p>
+        <font color="black">
+            目前平台正在测试阶段，很多不完善的地方还需调整。尤其是项目自动运行这部分，目前设置后还不能正常生效，正在检查。</font>
+    </p>
+    <p>
+        <font color="black">
+            本平台主要针对BS的接口测试自动化，正在验证阶段。接口形式主要是json格式的，如：http://url:port/api/parameter</font>
+    </p>
+    <p>
+        <font color="black">
+            举例说明（以登录为例）：</font>
+    </p>
+    <p>
+        <font color="black">
+            1、平台登录地址：http://10.2.3.26:8888/rango/login</font>
+    </p>
+    <p>
+        <font color="black">
+            2、建立项目：点击【添加项目】，录入项目名称、Domain、项目简介，点击【保存】。</font>
+    </p>
+    <a href="/static/img/demo1.jpg" target="_blank">
+        <img src="/static/img/demo1.jpg" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            3、在项目列表中，点击新增的项目名称，即可进入该项目的详情设置页面中。</font>
+    </p>
+    <a href="/static/img/demo2.jpg" target="_blank">
+        <img src="/static/img/demo2.jpg" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            4、在项目详情页面中，点击【编辑】，可以对项目信息进行调整；点击【设置】，添加数据库信息和自动执行事件（自动执行还在调试中）；
+            <br>点击【关闭】，将当前项目关闭并返回项目列表；点击【报告】，查看用例执行情况；点击【Run Test】，执行测试。</font>
+    </p>
+    <a href="/static/img/demo3.jpg" target="_blank">
+        <img src="/static/img/demo3.jpg" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            5、在项目详情页面中，点击【添加模块】，录入模块名称并保存。</font>
+    </p>
+    <a href="/static/img/demo4.jpg" target="_blank">
+        <img src="/static/img/demo4.jpg" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            6、在项目详情页面中，点击模块名称，进入模块详情设置页面（也就是API及用例设置页面）。</font>
+    </p>
+    <a href="/static/img/demo5.jpg" target="_blank">
+        <img src="/static/img/demo5.jpg" width="70%" height="70%"></a>
+    <p>
+        <font color="black">
+            7、点击【添加API】，录入名称、URL、请求方法、HEADERS（请求头），点击【保存】。</font>
+    </p>
+    <p>
+        <font color="red">
+            <b>
+                注意：</b>HEADERS的格式为：{"type":"value"}
+        </font>
+    </p>
+    <a href="/static/img/demo6.jpg" target="_blank">
+        <img src="/static/img/demo6.jpg" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            8、API新增后，可以在列表中看到新增的API，并且可执行如下操作：查看、编辑、禁用、执行、报告。</font>
+    </p>
+    <a href="/static/img/demo7.png" target="_blank">
+        <img src="/static/img/demo7.png" width="70%" height="70%">
+    </a>
+    <p>
+        <font color="black">
+            9、点击新增的API名称，进入API测试用例新增页面。</font>
+    </p>
+
 {% endblock %}
+</html>
