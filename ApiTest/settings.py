@@ -15,6 +15,7 @@ import os
 import sys
 import djcelery
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 #BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -64,6 +65,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, "../rango/html"), ],
         'APP_DIRS': True,
+        'SESSION_SAVE_EVERY_REQUEST':True,  # 为True时cookie过期设置生效
+        'SESSION_EXPIRE_AT_BROWSER_CLOSE':True,  # False：会话cookie可以在用户浏览器中保持有效期。True：关闭浏览器，则Cookie失效。
         'OPTIONS': {
             'debug': DEBUG,
             'context_processors': [
