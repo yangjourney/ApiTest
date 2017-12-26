@@ -150,7 +150,7 @@
   display: -moz-inline-stack;
   display: inline-block;
   vertical-align: middle;
-  *vertical-align: auto;
+  *vertical-align: middle;
   zoom: 1;
   *display: inline;
   border: 1px solid #d4d4d4;
