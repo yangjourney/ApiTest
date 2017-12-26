@@ -98,5 +98,5 @@ textarea {
 table {
     width: 100%;
     word-wrap: break-word;
-    word-break: break-word;
+    word-break: break-all;
 }
