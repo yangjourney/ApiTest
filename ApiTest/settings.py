@@ -30,7 +30,7 @@ SECRET_KEY = 'f*fy%gs@1q-avw%*fs_p(+f-8*ljzgg7o=#48gdu7h)pgoppoa'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.2.3.26']
+ALLOWED_HOSTS = ['10.2.3.26','127.0.0.1','192.167.118.103']
 LOGIN_REDIRECT_URL = './home'
 
 # Application definition
@@ -47,13 +47,12 @@ INSTALLED_APPS = [
     'djcelery',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -65,8 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, "../rango/html"), ],
         'APP_DIRS': True,
-        'SESSION_SAVE_EVERY_REQUEST':True,  # 为True时cookie过期设置生效
-        'SESSION_EXPIRE_AT_BROWSER_CLOSE':True,  # False：会话cookie可以在用户浏览器中保持有效期。True：关闭浏览器，则Cookie失效。
+        # 'SESSION_SAVE_EVERY_REQUEST':True,  # 为True时cookie过期设置生效
+        # 'SESSION_EXPIRE_AT_BROWSER_CLOSE':True,  # False：会话cookie可以在用户浏览器中保持有效期。True：关闭浏览器，则Cookie失效。
         'OPTIONS': {
             'debug': DEBUG,
             'context_processors': [

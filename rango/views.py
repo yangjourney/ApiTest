@@ -1,5 +1,5 @@
 import os,random
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 # from django.utils import simplejson
 import simplejson
 from django.core import serializers
@@ -21,13 +21,13 @@ import util
 # Enter home page
 def home(request):
 
-    return render_to_response("home.html",RequestContext(request))
+    return render(request,"home.html")
 
 
 # Enter login page
 def sign_in(request):
 
-    return render_to_response("login.html",RequestContext(request))
+    return render(request,"login.html")
 
 
 # Enter project list page
@@ -49,7 +49,7 @@ def projects_view(request):
                     failure += Report.objects.filter(case=case,status=False).count()
         dict={"item":item,"module_total":len(modules),"api_total":apitotal,"success":success,"failure":failure}
         list.append(dict)
-    return render_to_response("projects.html",{"data":list},RequestContext(request))
+    return render(request,"projects.html",{"data":list})
 
 
 # make projects statistic
@@ -103,7 +103,7 @@ def project_view(request):
         dict={"item":module,"success":module_success,"failure":module_failure,"total":module_casetotal}
         modules.append(dict)
 
-    return render_to_response("project.html",{"project":project,"modules":modules,"success":success,"failure":failure,"case_total":casetotal},RequestContext(request))
+    return render(request,"project.html",{"project":project,"modules":modules,"success":success,"failure":failure,"case_total":casetotal})
 
 
 def project_setting_view(request):
@@ -121,7 +121,7 @@ def project_setting_view(request):
     setting = dict()
     setting['task']=ptask
     setting['db']=dbconfigure
-    return render_to_response("setting.html",{"project":project,"setting":setting},RequestContext(request))
+    return render(request,"setting.html",{"project":project,"setting":setting})
 
 
 @login_required
@@ -176,35 +176,35 @@ def project_set(request):
 def apis_view(request):
     module = Module.objects.get(id=request.GET.get('mid'))
     apis=Api.objects.filter(module=module)
-    return render_to_response("apis.html",{"module":module,"apis":apis},RequestContext(request))
+    return render(request,"apis.html",{"module":module,"apis":apis})
 
 
 # Enter case list view page with api id
 def cases_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
     cases = Case.objects.filter(api=api)
-    return render_to_response('cases.html',{"api":api,"cases":cases},RequestContext(request))
+    return render(request,'cases.html',{"api":api,"cases":cases})
 
 
 # Enter reports view page
 def reports_view(request):
     data=Project.objects.all()
-    return render_to_response("reports.html",{"data":data},RequestContext(request))
+    return render(request,"reports.html",{"data":data})
 
 
 # Open one page containing our information
 def about_view(request):
-    return render_to_response("about.html",RequestContext(request))
+    return render(request,"about.html")
 
 
 # Open one page for creating project
 def project_create_view(request):
-    return render_to_response("project_create.html",RequestContext(request))
+    return render(request,"project_create.html")
 
 
 def project_edit_view(request):
     project = Project.objects.get(id=request.GET.get('id'))
-    return render_to_response("project_edit.html",{"project":project},RequestContext(request))
+    return render(request,"project_edit.html",{"project":project})
 
 
 @login_required
@@ -225,20 +225,20 @@ def project_update(request):
 def module_create_view(request):
     pid = request.GET.get('pid')
     project = Project.objects.get(id=pid)
-    return render_to_response("module_create.html",{"project":project},RequestContext(request))
+    return render(request,"module_create.html",{"project":project})
 
 
 # Enter one page for creating api
 def api_create_view(request):
     mid = request.GET.get('mid')
     module = Module.objects.get(id=mid)
-    return render_to_response("api_create.html",{"module":module},RequestContext(request))
+    return render(request,"api_create.html",{"module":module})
 
 
 # Enter one page for creating case
 def case_create_view(request):
     api = Api.objects.get(id=request.GET.get('aid'))
-    return render_to_response("case_create.html",{"api":api},RequestContext(request))
+    return render(request,"case_create.html",{"api":api})
 
 
 # Execute operation for insert one project into table
@@ -287,7 +287,7 @@ def api_save(request):
 # Enter one page for editing api information
 def api_edit_view(request):
     api = Api.objects.get(id=request.GET.get('id'))
-    return render_to_response('api_edit.html',{'api':api},RequestContext(request))
+    return render(request,'api_edit.html',{'api':api})
 
 
 # Execute operation for updating api information
@@ -306,7 +306,7 @@ def api_update(request):
 # Open page for editing case with api id
 def case_edit_view(request):
     case = Case.objects.get(id=request.GET.get('id'))
-    return render_to_response('case_edit.html',{'case':case},RequestContext(request))
+    return render(request,'case_edit.html',{'case':case})
 
 
 # Execute update operation for the given case
@@ -413,7 +413,7 @@ def case_active(request):
 def case_report_view(request):
     case = Case.objects.get(id=request.GET.get('id'))
     reports = Report.objects.filter(case=case)
-    return render_to_response('case_report.html',{'case':case,'reports':reports},RequestContext(request))
+    return render(request,'case_report.html',{'case':case,'reports':reports})
 
 
 def api_report_view(request):
@@ -423,7 +423,7 @@ def api_report_view(request):
     for case in cases:
         reports.extend(Report.objects.filter(case=case))
 
-    return render_to_response('api_report.html',{'api':api,'reports':reports},RequestContext(request))
+    return render(request,'api_report.html',{'api':api,'reports':reports})
 
 
 def all_report_view(request):
@@ -452,7 +452,7 @@ def all_report_view(request):
                 cases.extend(Case.objects.filter(api=api))
         for case in cases:
             reports.extend(Report.objects.filter(case=case))
-    return render_to_response('all_report.html',{'project':project,'reports':reports},RequestContext(request))
+    return render(request,'all_report.html',{'project':project,'reports':reports})
 
 
 # Test one case and generate report
